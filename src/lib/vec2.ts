@@ -1,7 +1,7 @@
 import { approximatelyEquals } from './common'
-import Mat2 from './mat2'
-import Mat3 from './mat3'
-import Mat4 from './mat4'
+import Mat2 from './mat22'
+import Mat3 from './mat33'
+import Mat4 from './mat44'
 import Mat23 from './mat23'
 
 export default class Vec2 extends Float32Array {

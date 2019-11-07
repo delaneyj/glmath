@@ -1,4 +1,4 @@
-import Mat2 from '../lib/mat2'
+import Mat2 from '../lib/mat22'
 import Vec2 from '../lib/vec2'
 
 describe('mat2', () => {
