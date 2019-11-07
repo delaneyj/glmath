@@ -29,74 +29,68 @@ describe('mat2', () => {
     })
   })
 
-  // describe("copy", () => {
-  //   beforeEach(() => { result = mat2.copy(out, matA); });
-  //   it("should place values into out", () => { expect(out).toBeEqualish(matA); });
-  //   it("should return out", () => { expect(result).toBe(out); });
-  // });
+  describe('copy', () => {
+    beforeEach(() => {
+      result.copy(matA)
+    })
+    it('should place values into out', () => {
+      expect(result.equalsApproximately(matA))
+    })
+  })
 
-  // describe("identity", () => {
-  //   beforeEach(() => { result = mat2.identity(out); });
-  //   it("should place values into out", () => { expect(result).toBeEqualish(identity); });
-  //   it("should return out", () => { expect(result).toBe(out); });
-  // });
+  describe('identity', () => {
+    beforeEach(() => {
+      result = new Mat2()
+    })
+    it('should place values into out', () => {
+      expect(result.equalsApproximately(identity))
+    })
+  })
 
-  // describe("transpose", () => {
-  //   describe("with a separate output matrix", () => {
-  //     beforeEach(() => { result = mat2.transpose(out, matA); });
+  describe('transpose', () => {
+    beforeEach(() => {
+      result.copy(matA).transpose()
+    })
 
-  //     it("should place values into out", () => { expect(out).toBeEqualish([1, 3, 2, 4]); });
-  //     it("should return out", () => { expect(result).toBe(out); });
-  //     it("should not modify matA", () => { expect(matA).toBeEqualish([1, 2, 3, 4]); });
-  //   });
+    it('should place values into out', () => {
+      expect(result.equalsApproximately(new Mat2(1, 3, 2, 4)))
+    })
+    it('should not modify matA', () => {
+      expect(matA.equalsApproximately(new Mat2(1, 2, 3, 4)))
+    })
+  })
 
-  //   describe("when matA is the output matrix", () => {
-  //     beforeEach(() => { result = mat2.transpose(matA, matA); });
+  describe('invert', () => {
+    beforeEach(() => {
+      result.copy(matA).invert()
+    })
 
-  //     it("should place values into matA", () => { expect(matA).toBeEqualish([1, 3, 2, 4]); });
-  //     it("should return matA", () => { expect(result).toBe(matA); });
-  //   });
-  // });
+    it('should place values into out', () => {
+      expect(result.equalsApproximately(new Mat2(-2, 1, 1.5, -0.5)))
+    })
+    it('should not modify matA', () => {
+      expect(matA.equalsApproximately(new Mat2(1, 2, 3, 4)))
+    })
+  })
 
-  // describe("invert", () => {
-  //   describe("with a separate output matrix", () => {
-  //     beforeEach(() => { result = mat2.invert(out, matA); });
+  describe('adjoint', () => {
+    beforeEach(() => {
+      result.copy(matA).adjoint()
+    })
 
-  //     it("should place values into out", () => { expect(out).toBeEqualish([-2, 1, 1.5, -0.5]); });
-  //     it("should return out", () => { expect(result).toBe(out); });
-  //     it("should not modify matA", () => { expect(matA).toBeEqualish([1, 2, 3, 4]); });
-  //   });
+    it('should place values into out', () => {
+      expect(result.equalsApproximately(new Mat2(4, -2, -3, 1)))
+    })
+    it('should not modify matA', () => {
+      expect(matA.equalsApproximately(new Mat2(1, 2, 3, 4)))
+    })
+  })
 
-  //   describe("when matA is the output matrix", () => {
-  //     beforeEach(() => { result = mat2.invert(matA, matA); });
-
-  //     it("should place values into matA", () => { expect(matA).toBeEqualish([-2, 1, 1.5, -0.5]); });
-  //     it("should return matA", () => { expect(result).toBe(matA); });
-  //   });
-  // });
-
-  // describe("adjoint", () => {
-  //   describe("with a separate output matrix", () => {
-  //     beforeEach(() => { result = mat2.adjoint(out, matA); });
-
-  //     it("should place values into out", () => { expect(out).toBeEqualish([4, -2, -3, 1]); });
-  //     it("should return out", () => { expect(result).toBe(out); });
-  //     it("should not modify matA", () => { expect(matA).toBeEqualish([1, 2, 3, 4]); });
-  //   });
-
-  //   describe("when matA is the output matrix", () => {
-  //     beforeEach(() => { result = mat2.adjoint(matA, matA); });
-
-  //     it("should place values into matA", () => { expect(matA).toBeEqualish([4, -2, -3, 1]); });
-  //     it("should return matA", () => { expect(result).toBe(matA); });
-  //   });
-  // });
-
-  // describe("determinant", () => {
-  //   beforeEach(() => { result = mat2.determinant(matA); });
-
-  //   it("should return the determinant", () => { expect(result).toEqual(-2); });
-  // });
+  describe('determinant', () => {
+    it('should return the determinant', () => {
+      expect(matA.determinant).toEqual(-2)
+    })
+  })
 
   describe('multiply', () => {
     beforeEach(() => {

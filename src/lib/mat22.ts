@@ -45,45 +45,36 @@ export default class Mat2 extends Float32Array {
     return this
   }
 
-  transpose(source: Mat2): Mat2 {
+  transpose(): Mat2 {
     // If we are transposing ourselves we can skip a few steps but have to cache
     // some values
-    if (this === source) {
-      const a1 = source[1]
-      this[1] = source[2]
-      this[2] = a1
-    } else {
-      this[0] = source[0]
-      this[1] = source[2]
-      this[2] = source[1]
-      this[3] = source[3]
-    }
+    const a1 = this[1]
+    this[1] = this[2]
+    this[2] = a1
     return this
   }
 
-  invert(a: Mat2): Mat2 {
-    let det = a.determinant()
+  invert(): Mat2 {
+    let det = this.determinant
     if (det === 0) return this
     det = 1 / det
-
-    this[0] = a[3] * det
-    this[1] = -a[1] * det
-    this[2] = -a[2] * det
-    this[3] = a[0] * det
+    this[0] = this[3] * det
+    this[1] = -this[1] * det
+    this[2] = -this[2] * det
+    this[3] = this[0] * det
     return this
   }
 
-  adjoint(a: Mat2): Mat2 {
-    // Caching this value is nessecary if out == a
-    const a0 = a[0]
-    this[0] = a[3]
-    this[1] = -a[1]
-    this[2] = -a[2]
+  adjoint(): Mat2 {
+    const a0 = this[0]
+    this[0] = this[3]
+    this[1] = -this[1]
+    this[2] = -this[2]
     this[3] = a0
     return this
   }
 
-  determinant(): number {
+  get determinant(): number {
     return this[0] * this[3] - this[2] * this[1]
   }
 
