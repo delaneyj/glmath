@@ -1,7 +1,7 @@
 import Mat3 from './mat33'
 import Vec3 from './vec3'
 import { AxisAngle } from './common'
-import { approximatelyEquals, degree2rad, EPSILON, sqrt } from './common'
+import { equalsApproximately, degree2rad, EPSILON, sqrt } from './common'
 
 export default class Quat extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 1) {
@@ -359,10 +359,10 @@ export default class Quat extends Float32Array {
     const [x, y, z, w] = this
     const [bx, by, bz, bw] = b
     return (
-      approximatelyEquals(x, bx) &&
-      approximatelyEquals(y, by) &&
-      approximatelyEquals(z, bz) &&
-      approximatelyEquals(w, bw)
+      equalsApproximately(x, bx) &&
+      equalsApproximately(y, by) &&
+      equalsApproximately(z, bz) &&
+      equalsApproximately(w, bw)
     )
   }
 

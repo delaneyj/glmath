@@ -1,4 +1,4 @@
-import { approximatelyEquals } from './common'
+import { equalsApproximately } from './common'
 import Vec2 from './vec2'
 
 export default class Mat2 extends Float32Array {
@@ -225,10 +225,10 @@ export default class Mat2 extends Float32Array {
       b3 = b[3]
 
     return (
-      approximatelyEquals(a0, b0) &&
-      approximatelyEquals(a1, b1) &&
-      approximatelyEquals(a2, b2) &&
-      approximatelyEquals(a3, b3)
+      equalsApproximately(a0, b0) &&
+      equalsApproximately(a1, b1) &&
+      equalsApproximately(a2, b2) &&
+      equalsApproximately(a3, b3)
     )
   }
 

@@ -1,7 +1,7 @@
 import Mat4 from './mat44'
 import Mat3 from './mat33'
 import Quat from './quat'
-import { approximatelyEquals, sqrt } from './common'
+import { equalsApproximately, sqrt } from './common'
 
 // 3 Dimensional Vector
 export default class Vec3 extends Float32Array {
@@ -334,6 +334,6 @@ export default class Vec3 extends Float32Array {
   equalsApproximately(b: Vec3): boolean {
     const [ax, ay, az] = this
     const [bx, by, bz] = b
-    return approximatelyEquals(ax, bx) && approximatelyEquals(ay, by) && approximatelyEquals(az, bz)
+    return equalsApproximately(ax, bx) && equalsApproximately(ay, by) && equalsApproximately(az, bz)
   }
 }

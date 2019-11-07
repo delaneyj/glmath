@@ -1,4 +1,4 @@
-import { approximatelyEquals } from './common'
+import { equalsApproximately } from './common'
 import Mat23 from './mat23'
 import Mat4 from './mat44'
 import Vec2 from './vec2'
@@ -39,7 +39,7 @@ export default class Mat3 extends Float32Array {
   }
 
   // Copies the upper-left 3x3 values into the given mat3.
-  fromMat4(a: Mat4): Mat4 {
+  fromMat4(a: Mat4): Mat3 {
     this[0] = a[0]
     this[1] = a[1]
     this[2] = a[2]
@@ -349,15 +349,15 @@ export default class Mat3 extends Float32Array {
     const [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this
     const [b0, b1, b2, b3, b4, b5, b6, b7, b8] = b
     return (
-      approximatelyEquals(a0, b0) &&
-      approximatelyEquals(a1, b1) &&
-      approximatelyEquals(a2, b2) &&
-      approximatelyEquals(a3, b3) &&
-      approximatelyEquals(a4, b4) &&
-      approximatelyEquals(a5, b5) &&
-      approximatelyEquals(a6, b6) &&
-      approximatelyEquals(a7, b7) &&
-      approximatelyEquals(a8, b8)
+      equalsApproximately(a0, b0) &&
+      equalsApproximately(a1, b1) &&
+      equalsApproximately(a2, b2) &&
+      equalsApproximately(a3, b3) &&
+      equalsApproximately(a4, b4) &&
+      equalsApproximately(a5, b5) &&
+      equalsApproximately(a6, b6) &&
+      equalsApproximately(a7, b7) &&
+      equalsApproximately(a8, b8)
     )
   }
 }

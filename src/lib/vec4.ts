@@ -1,7 +1,7 @@
 import Vec3 from './vec3'
 import Quat from './quat'
 import Mat4 from './mat44'
-import { approximatelyEquals, sqrt } from './common'
+import { equalsApproximately, sqrt } from './common'
 
 export default class Vec4 extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 0) {
@@ -271,10 +271,10 @@ export default class Vec4 extends Float32Array {
     const [x, y, z, w] = this
     const [bx, by, bz, bw] = b
     return (
-      approximatelyEquals(x, bx) &&
-      approximatelyEquals(y, by) &&
-      approximatelyEquals(z, bz) &&
-      approximatelyEquals(w, bw)
+      equalsApproximately(x, bx) &&
+      equalsApproximately(y, by) &&
+      equalsApproximately(z, bz) &&
+      equalsApproximately(w, bw)
     )
   }
 }

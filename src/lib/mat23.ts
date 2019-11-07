@@ -1,4 +1,4 @@
-import { approximatelyEquals } from './common'
+import { equalsApproximately } from './common'
 import Vec2 from './vec2'
 
 /**
@@ -185,12 +185,12 @@ export default class Mat23 extends Float32Array {
     const [a0, a1, a2, a3, a4, a5] = this
     const [b0, b1, b2, b3, b4, b5] = b
     return (
-      approximatelyEquals(a0, b0) &&
-      approximatelyEquals(a1, b1) &&
-      approximatelyEquals(a2, b2) &&
-      approximatelyEquals(a3, b3) &&
-      approximatelyEquals(a4, b4) &&
-      approximatelyEquals(a5, b5)
+      equalsApproximately(a0, b0) &&
+      equalsApproximately(a1, b1) &&
+      equalsApproximately(a2, b2) &&
+      equalsApproximately(a3, b3) &&
+      equalsApproximately(a4, b4) &&
+      equalsApproximately(a5, b5)
     )
   }
 }

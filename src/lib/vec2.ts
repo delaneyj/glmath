@@ -1,4 +1,4 @@
-import { approximatelyEquals, sqrt } from './common'
+import { equalsApproximately, sqrt } from './common'
 import Mat2 from './mat22'
 import Mat3 from './mat33'
 import Mat4 from './mat44'
@@ -260,6 +260,6 @@ export default class Vec2 extends Float32Array {
   equalsApproximately(b: Vec2): boolean {
     const [a0, a1] = this
     const [b0, b1] = b
-    return approximatelyEquals(a0, b0) && approximatelyEquals(a1, b1)
+    return equalsApproximately(a0, b0) && equalsApproximately(a1, b1)
   }
 }
