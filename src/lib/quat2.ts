@@ -1,7 +1,7 @@
+import { AxisAngle, EPSILON, equalsApproximately, sqrt } from './common'
+import Mat4 from './mat44'
 import Quat from './quat'
 import Vec3 from './vec3'
-import Mat4 from './mat44'
-import { equalsApproximately, AxisAngle, EPSILON, sqrt } from './common'
 
 // Dual Quaternion.  Format: [real, dual]
 // Make sure to have normalized dual quaternions, otherwise the functions may not work as intended.<br>

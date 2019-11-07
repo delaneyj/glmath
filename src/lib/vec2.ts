@@ -1,14 +1,21 @@
 import { equalsApproximately, sqrt } from './common'
 import Mat2 from './mat22'
+import Mat23 from './mat23'
 import Mat3 from './mat33'
 import Mat4 from './mat44'
-import Mat23 from './mat23'
+import Vec3 from './vec3'
 
 export default class Vec2 extends Float32Array {
   constructor(x = 0, y = 0) {
     super(2)
     this[0] = x
     this[1] = y
+  }
+
+  zero(): Vec2 {
+    this[0] = 0
+    this[1] = 0
+    return this
   }
 
   clone(): Vec2 {
@@ -124,11 +131,11 @@ export default class Vec2 extends Float32Array {
     return this[0] * b[0] + this[1] * b[1]
   }
 
-  cross(b: Vec2): Vec2 {
-    const z = this[0] * b[1] - this[1] * b[0]
-    this[0] = this[1] = 0
-    this[2] = z
-    return this
+  cross(b: Vec2): Vec3 {
+    const [ax, ay] = this
+    const [bx, by] = b
+    const z = ax * by - ay * bx
+    return new Vec3(0, 0, z)
   }
 
   /**

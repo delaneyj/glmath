@@ -1,7 +1,7 @@
-import Vec3 from './vec3'
-import Quat from './quat'
-import Mat4 from './mat44'
 import { equalsApproximately, sqrt } from './common'
+import Mat4 from './mat44'
+import Quat from './quat'
+import Vec3 from './vec3'
 
 export default class Vec4 extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 0) {

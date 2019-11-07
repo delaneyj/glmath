@@ -1,13 +1,19 @@
-import Mat4 from './mat44'
-import Mat3 from './mat33'
-import Quat from './quat'
 import { equalsApproximately, sqrt } from './common'
+import Mat3 from './mat33'
+import Mat4 from './mat44'
+import Quat from './quat'
+import Vec2 from './vec2'
 
 // 3 Dimensional Vector
 export default class Vec3 extends Float32Array {
   constructor(x = 0, y = 0, z = 0) {
     super(3)
     this.set([x, y, z])
+  }
+
+  static fromV2(v: Vec2): Vec3 {
+    const [x, y] = v
+    return new Vec3(x, y)
   }
 
   static right(): Vec3 {

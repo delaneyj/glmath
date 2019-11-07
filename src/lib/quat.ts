@@ -1,7 +1,6 @@
+import { AxisAngle, degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
 import Mat3 from './mat33'
 import Vec3 from './vec3'
-import { AxisAngle } from './common'
-import { equalsApproximately, degree2rad, EPSILON, sqrt } from './common'
 
 export default class Quat extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 1) {
