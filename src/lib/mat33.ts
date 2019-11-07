@@ -39,17 +39,8 @@ export class Mat3 extends Float32Array {
   }
 
   // Copies the upper-left 3x3 values into the given mat3.
-  fromMat4(a: Mat4): Mat3 {
-    this[0] = a[0]
-    this[1] = a[1]
-    this[2] = a[2]
-    this[3] = a[4]
-    this[4] = a[5]
-    this[5] = a[6]
-    this[6] = a[8]
-    this[7] = a[9]
-    this[8] = a[10]
-    return this
+  static fromMat4(a: Mat4): Mat3 {
+    return new Mat3(a[0], a[1], a[2], a[4], a[5], a[6], a[8], a[9], a[10])
   }
 
   clone(): Mat3 {
@@ -133,7 +124,18 @@ export class Mat3 extends Float32Array {
   }
 
   get determinant(): number {
-    const [a00, a01, a02, a10, a11, a12, a20, a21, a22] = this
+    // const [a00, a01, a02, a10, a11, a12, a20, a21, a22] = this
+    // return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a12 * a20) + a02 * (a21 * a10 - a11 * a20)
+    const a00 = this[0],
+      a01 = this[1],
+      a02 = this[2]
+    const a10 = this[3],
+      a11 = this[4],
+      a12 = this[5]
+    const a20 = this[6],
+      a21 = this[7],
+      a22 = this[8]
+
     return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a12 * a20) + a02 * (a21 * a10 - a11 * a20)
   }
 
@@ -269,17 +271,8 @@ export class Mat3 extends Float32Array {
     )
   }
 
-  projection(glContextWidth: number, glContextHeight: number): Mat3 {
-    this[0] = 2 / glContextWidth
-    this[1] = 0
-    this[2] = 0
-    this[3] = 0
-    this[4] = -2 / glContextHeight
-    this[5] = 0
-    this[6] = -1
-    this[7] = 1
-    this[8] = 1
-    return this
+  static projection(glContextWidth: number, glContextHeight: number): Mat3 {
+    return new Mat3(2 / glContextWidth, 0, 0, 0, -2 / glContextHeight, 0, -1, 1, 1)
   }
 
   toString(): string {

@@ -27,22 +27,22 @@ export class Mat4 extends Float32Array {
    * @returns {mat4} A new mat4
    */
   constructor(
-    m00: number,
-    m01: number,
-    m02: number,
-    m03: number,
-    m10: number,
-    m11: number,
-    m12: number,
-    m13: number,
-    m20: number,
-    m21: number,
-    m22: number,
-    m23: number,
-    m30: number,
-    m31: number,
-    m32: number,
-    m33: number,
+    m00 = 1,
+    m01 = 0,
+    m02 = 0,
+    m03 = 0,
+    m10 = 0,
+    m11 = 1,
+    m12 = 0,
+    m13 = 0,
+    m20 = 0,
+    m21 = 0,
+    m22 = 1,
+    m23 = 0,
+    m30 = 0,
+    m31 = 0,
+    m32 = 0,
+    m33 = 1,
   ) {
     super(16)
     this[0] = m00
