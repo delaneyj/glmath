@@ -1,7 +1,7 @@
 import Mat4 from './mat44'
 import Mat3 from './mat33'
 import Quat from './quat'
-import { approximatelyEquals } from './common'
+import { approximatelyEquals, sqrt } from './common'
 
 // 3 Dimensional Vector
 export default class Vec3 extends Float32Array {
@@ -206,7 +206,7 @@ export default class Vec3 extends Float32Array {
   random(scale = 1): Vec3 {
     const r = Math.random() * 2.0 * Math.PI
     const z = Math.random() * 2.0 - 1.0
-    const zScale = Math.sqrt(1.0 - z * z) * scale
+    const zScale = sqrt(1.0 - z * z) * scale
     this[0] = Math.cos(r) * zScale
     this[1] = Math.sin(r) * zScale
     this[2] = z * scale

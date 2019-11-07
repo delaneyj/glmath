@@ -1,6 +1,6 @@
 import Mat3 from './mat33'
 import Vec3 from './vec3'
-import { approximatelyEquals, degree2rad, EPSILON } from './common'
+import { approximatelyEquals, degree2rad, EPSILON, sqrt } from './common'
 
 interface AxisAngle {
   Axis: Vec3
@@ -109,14 +109,14 @@ export default class Quat extends Float32Array {
    */
   calculateW(): Quat {
     const [x, y, z] = this
-    this[3] = Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z))
+    this[3] = sqrt(Math.abs(1.0 - x * x - y * y - z * z))
     return this
   }
 
   // Calculate the exponential of a unit quaternion.
   exp(): Quat {
     const [x, y, z, w] = this
-    const r = Math.sqrt(x * x + y * y + z * z)
+    const r = sqrt(x * x + y * y + z * z)
     const et = Math.exp(w)
     const s = r > 0 ? (et * Math.sin(r)) / r : 0
     this[0] = x * s
@@ -129,7 +129,7 @@ export default class Quat extends Float32Array {
   // Calculate the natural logarithm of a unit quaternion.
   ln(): Quat {
     const [x, y, z, w] = this
-    const r = Math.sqrt(x * x + y * y + z * z)
+    const r = sqrt(x * x + y * y + z * z)
     const t = r > 0 ? Math.atan2(r, w) / r : 0
     this[0] = x * t
     this[1] = y * t
@@ -189,8 +189,8 @@ export default class Quat extends Float32Array {
     const u1 = Math.random()
     const u2 = Math.random()
     const u3 = Math.random()
-    const sqrt1MinusU1 = Math.sqrt(1 - u1)
-    const sqrtU1 = Math.sqrt(u1)
+    const sqrt1MinusU1 = sqrt(1 - u1)
+    const sqrtU1 = sqrt(u1)
 
     this[0] = sqrt1MinusU1 * Math.sin(2.0 * Math.PI * u2)
     this[1] = sqrt1MinusU1 * Math.cos(2.0 * Math.PI * u2)
@@ -236,7 +236,7 @@ export default class Quat extends Float32Array {
     const q = new Quat()
     if (fTrace > 0.0) {
       // |w| > 1/2, may as well choose w > 1/2
-      fRoot = Math.sqrt(fTrace + 1.0) // 2w
+      fRoot = sqrt(fTrace + 1.0) // 2w
       q[3] = 0.5 * fRoot
       fRoot = 0.5 / fRoot // 1/(4w)
       q[0] = (m[5] - m[7]) * fRoot
@@ -250,7 +250,7 @@ export default class Quat extends Float32Array {
       const j = (i + 1) % 3
       const k = (i + 2) % 3
 
-      fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0)
+      fRoot = sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0)
       q[i] = 0.5 * fRoot
       fRoot = 0.5 / fRoot
       q[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot
@@ -348,7 +348,7 @@ export default class Quat extends Float32Array {
     let len = this.squaredLength
 
     if (len > 0) {
-      len = 1 / Math.sqrt(len)
+      len = 1 / sqrt(len)
     }
     this[0] = x * len
     this[1] = y * len

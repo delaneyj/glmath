@@ -1,4 +1,4 @@
-import { approximatelyEquals } from './common'
+import { approximatelyEquals, sqrt } from './common'
 import Mat2 from './mat22'
 import Mat3 from './mat33'
 import Mat4 from './mat44'
@@ -87,7 +87,7 @@ export default class Vec2 extends Float32Array {
   }
 
   distance(b: Vec2): number {
-    return Math.sqrt(this.squaredDistance(b))
+    return sqrt(this.squaredDistance(b))
   }
 
   squaredDistance(b: Vec2): number {
@@ -102,7 +102,7 @@ export default class Vec2 extends Float32Array {
   }
 
   get vLength(): number {
-    return Math.sqrt(this.sqLength)
+    return sqrt(this.sqLength)
   }
 
   negate(): Vec2 {
@@ -120,7 +120,7 @@ export default class Vec2 extends Float32Array {
   normalize(): Vec2 {
     const len = this.vLength
     if (len > 0) {
-      this.scale(1 / Math.sqrt(len))
+      this.scale(1 / sqrt(len))
     }
     return this
   }
@@ -237,12 +237,12 @@ export default class Vec2 extends Float32Array {
   angle(b: Vec2): number {
     let len1 = this.vLength
     if (len1 > 0) {
-      len1 = 1 / Math.sqrt(len1)
+      len1 = 1 / sqrt(len1)
     }
 
     let len2 = b.vLength
     if (len2 > 0) {
-      len2 = 1 / Math.sqrt(len2)
+      len2 = 1 / sqrt(len2)
     }
 
     const cos = this.squaredDistance(b) * len1 * len2

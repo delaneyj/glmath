@@ -1,7 +1,7 @@
 import Vec3 from './vec3'
 import Quat from './quat'
 import Mat4 from './mat44'
-import { approximatelyEquals } from './common'
+import { approximatelyEquals, sqrt } from './common'
 
 export default class Vec4 extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 0) {
@@ -154,7 +154,7 @@ export default class Vec4 extends Float32Array {
     let len = this.squaredLength
 
     if (len > 0) {
-      len = 1 / Math.sqrt(len)
+      len = 1 / sqrt(len)
     }
     this[0] = x * len
     this[1] = y * len
@@ -215,7 +215,7 @@ export default class Vec4 extends Float32Array {
       s2 = v3 * v3 + v4 * v4
     } while (s2 >= 1)
 
-    const d = Math.sqrt((1 - s1) / s2)
+    const d = sqrt((1 - s1) / s2)
     this[0] = scale * v1
     this[1] = scale * v2
     this[2] = scale * v3 * d
