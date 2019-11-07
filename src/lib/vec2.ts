@@ -5,15 +5,10 @@ import Mat4 from './mat44'
 import Mat23 from './mat23'
 
 export default class Vec2 extends Float32Array {
-  constructor(x: number, y: number) {
+  constructor(x = 0, y = 0) {
     super(2)
-    this.fromValues(x, y)
-  }
-
-  fromValues(x: number, y: number): Vec2 {
     this[0] = x
     this[1] = y
-    return this
   }
 
   clone(): Vec2 {

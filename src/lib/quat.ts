@@ -1,11 +1,8 @@
 import Mat3 from './mat33'
 import Vec3 from './vec3'
+import { AxisAngle } from './common'
 import { approximatelyEquals, degree2rad, EPSILON, sqrt } from './common'
 
-interface AxisAngle {
-  Axis: Vec3
-  Angle: number
-}
 export default class Quat extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     super(4)
@@ -289,11 +286,6 @@ export default class Quat extends Float32Array {
 
   clone(): Quat {
     return new Quat(this[0], this[1], this[2], this[3])
-  }
-
-  fromValues(x: number, y: number, z: number, w: number): Quat {
-    this.set([x, y, z, w])
-    return this
   }
 
   copy(q: Quat): Quat {

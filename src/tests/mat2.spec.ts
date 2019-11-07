@@ -212,9 +212,9 @@ describe('mat2', () => {
     })
   })
 
-  describe('fromValues', () => {
+  describe('setValues', () => {
     beforeEach(() => {
-      result.fromValues(1, 2, 3, 4)
+      result.set([1, 2, 3, 4])
     })
     it('should return a 4 element array initialized to the values passed', () => {
       expect(result.equalsApproximately(new Mat2(1, 2, 3, 4)))

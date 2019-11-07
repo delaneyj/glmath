@@ -6,16 +6,14 @@ import { approximatelyEquals, sqrt } from './common'
 export default class Vec4 extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 0) {
     super(4)
-    this.fromValues(x, y, z, w)
+    this[0] = x
+    this[1] = y
+    this[2] = z
+    this[3] = w
   }
 
   clone(): Vec4 {
     return new Vec4(this[0], this[1], this[2], this[3])
-  }
-
-  fromValues(x: number, y: number, z: number, w: number): Vec4 {
-    this.set([x, y, z, w])
-    return this
   }
 
   copy(a: Vec4): Vec4 {

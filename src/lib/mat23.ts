@@ -21,9 +21,14 @@ import Vec2 from './vec2'
  * The last column is ignored so the array is shorter and operations are faster.
  */
 export default class Mat23 extends Float32Array {
-  constructor(a: number, b: number, c: number, d: number, tx: number, ty: number) {
+  constructor(a = 1, b = 0, c = 0, d = 1, tx = 0, ty = 0) {
     super(6)
-    this.set([a, b, c, d, tx, ty])
+    this[0] = a
+    this[1] = b
+    this[2] = c
+    this[3] = d
+    this[4] = tx
+    this[5] = ty
   }
 
   setIdentity(): Mat23 {
@@ -53,27 +58,6 @@ export default class Mat23 extends Float32Array {
    */
   static identity(): Mat23 {
     return new Mat23(1, 0, 0, 1, 0, 0)
-  }
-
-  /**
-   * Create a new mat2d with the given values
-   *
-   * @param {Number} a Component A (index 0)
-   * @param {Number} b Component B (index 1)
-   * @param {Number} c Component C (index 2)
-   * @param {Number} d Component D (index 3)
-   * @param {Number} tx Component TX (index 4)
-   * @param {Number} ty Component TY (index 5)
-   * @returns {mat2d} A new mat2d
-   */
-  fromValues(a: number, b: number, c: number, d: number, tx: number, ty: number): Mat23 {
-    this[0] = a
-    this[1] = b
-    this[2] = c
-    this[3] = d
-    this[4] = tx
-    this[5] = ty
-    return this
   }
 
   invert(): Mat23 {
