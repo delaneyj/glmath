@@ -1,8 +1,8 @@
-import Vec2 from '../lib/vec2'
 import { equalsApproximately } from '../lib/common'
-import Vec3 from '../lib/vec3'
-import Mat2 from '../lib/mat22'
-import Mat23 from '../lib/mat23'
+import { Mat2 } from '../lib/mat22'
+import { Mat23 } from '../lib/mat23'
+import { Vec2 } from '../lib/vec2'
+import { Vec3 } from '../lib/vec3'
 
 describe('vec2', () => {
   const vecA = new Vec2()

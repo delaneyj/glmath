@@ -1,10 +1,9 @@
-import Vec3 from './vec3'
+import { Vec3 } from './vec3'
 
 // Common utilities
 
 // Configuration Constants
 export const EPSILON = 0.000001
-export const ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array
 export const RANDOM = Math.random
 
 export const degree2rad = Math.PI / 180

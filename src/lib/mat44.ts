@@ -1,10 +1,10 @@
 import { AxisAngle, degree2rad as deg2rad, EPSILON, equalsApproximately, inverseSqrt, sqrt } from './common'
-import Quat from './quat'
-import DualQuaternion from './quat2'
-import Vec3 from './vec3'
+import { Vec3 } from './vec3'
+import { Quat } from './quat'
+import { DualQuaternion } from './quat2'
 
 // 4x4 Matrix, column-major, when typed out it looks like row-major. The matrices are being post multiplied.
-export default class Mat4 extends Float32Array {
+export class Mat4 extends Float32Array {
   /**
    * Create a new mat4 with the given values
    *

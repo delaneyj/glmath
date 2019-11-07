@@ -1,6 +1,6 @@
-import Mat2 from '../lib/mat22'
-import Vec2 from '../lib/vec2'
-import { sqrt, equalsApproximately } from '../lib/common'
+import { equalsApproximately, sqrt } from '../lib/common'
+import { Mat2 } from '../lib/mat22'
+import { Vec2 } from '../lib/vec2'
 
 describe('mat2', () => {
   let matA: Mat2, matB: Mat2, result: Mat2

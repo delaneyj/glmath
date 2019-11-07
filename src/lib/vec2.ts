@@ -1,11 +1,11 @@
 import { equalsApproximately, sqrt } from './common'
-import Mat2 from './mat22'
-import Mat23 from './mat23'
-import Mat3 from './mat33'
-import Mat4 from './mat44'
-import Vec3 from './vec3'
+import { Mat2 } from './mat22'
+import { Mat23 } from './mat23'
+import { Mat3 } from './mat33'
+import { Mat4 } from './mat44'
+import { Vec3 } from './vec3'
 
-export default class Vec2 extends Float32Array {
+export class Vec2 extends Float32Array {
   constructor(x = 0, y = 0) {
     super(2)
     this[0] = x

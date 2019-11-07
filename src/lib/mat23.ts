@@ -1,5 +1,5 @@
 import { equalsApproximately } from './common'
-import Vec2 from './vec2'
+import { Vec2 } from './vec2'
 
 /**
  * 2x3 Matrix
@@ -20,7 +20,7 @@ import Vec2 from './vec2'
  * </pre>
  * The last column is ignored so the array is shorter and operations are faster.
  */
-export default class Mat23 extends Float32Array {
+export class Mat23 extends Float32Array {
   constructor(a = 1, b = 0, c = 0, d = 1, tx = 0, ty = 0) {
     super(6)
     this[0] = a

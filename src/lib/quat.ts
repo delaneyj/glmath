@@ -1,8 +1,8 @@
 import { AxisAngle, degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
-import Mat3 from './mat33'
-import Vec3 from './vec3'
+import { Mat3 } from './mat33'
+import { Vec3 } from './vec3'
 
-export default class Quat extends Float32Array {
+export class Quat extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     super(4)
     this.set([x, y, z, w])

@@ -1,7 +1,7 @@
 import { equalsApproximately } from './common'
-import Vec2 from './vec2'
+import { Vec2 } from './vec2'
 
-export default class Mat2 extends Float32Array {
+export class Mat2 extends Float32Array {
   /**
    * Create a new mat2 with the given values
    *

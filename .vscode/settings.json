@@ -21,4 +21,5 @@
     "[typescriptreact]": {
         "editor.formatOnSave": false,
     },
+    "jest.showCoverageOnLoad": true,
 }

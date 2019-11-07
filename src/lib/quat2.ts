@@ -1,11 +1,11 @@
 import { AxisAngle, EPSILON, equalsApproximately, sqrt } from './common'
-import Mat4 from './mat44'
-import Quat from './quat'
-import Vec3 from './vec3'
+import { Quat } from './quat'
+import { Vec3 } from './vec3'
+import { Mat4 } from './mat44'
 
 // Dual Quaternion.  Format: [real, dual]
 // Make sure to have normalized dual quaternions, otherwise the functions may not work as intended.<br>
-export default class DualQuaternion extends Float32Array {
+export class DualQuaternion extends Float32Array {
   constructor(realX = 0, realY = 0, realZ = 0, realW = 1, dualX = 0, dualY = 0, dualZ = 0, dualW = 0) {
     super(8)
     this[0] = realX

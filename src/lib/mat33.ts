@@ -1,11 +1,11 @@
 import { equalsApproximately } from './common'
-import Mat23 from './mat23'
-import Mat4 from './mat44'
-import Quat from './quat'
-import Vec2 from './vec2'
+import { Mat23 } from './mat23'
+import { Mat4 } from './mat44'
+import { Quat } from './quat'
+import { Vec2 } from './vec2'
 
 // 3x3 Matrix
-export default class Mat3 extends Float32Array {
+export class Mat3 extends Float32Array {
   /**
    * Create a new mat3 with the given values
    *
