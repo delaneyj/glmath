@@ -1,5 +1,3 @@
-import { Vec3 } from './vec3'
-
 // Common utilities
 
 // Configuration Constants
@@ -32,9 +30,4 @@ export function inverseSqrt(n: number): number {
 // Inverse q3 inverse sqrt
 export function sqrt(n: number): number {
   return 1 / inverseSqrt(n)
-}
-
-export interface AxisAngle {
-  Axis: Vec3
-  Angle: number
 }

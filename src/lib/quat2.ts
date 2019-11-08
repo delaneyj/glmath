@@ -1,4 +1,4 @@
-import { AxisAngle, EPSILON, equalsApproximately, sqrt } from './common'
+import { EPSILON, equalsApproximately } from './common'
 import { Quat } from './quat'
 import { Vec3 } from './vec3'
 import { Mat4 } from './mat44'
@@ -273,18 +273,18 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  rotateAroundAxis(aa: AxisAngle): DualQuaternion {
+  rotateAroundAxis(axis: Vec3, rad: number): DualQuaternion {
     //Special case for rad = 0
-    if (Math.abs(aa.Angle) < EPSILON) {
+    if (Math.abs(rad) < EPSILON) {
       return this
     }
-    const axisLength = sqrt(aa.Axis[0] * aa.Axis[0] + aa.Axis[1] * aa.Axis[1] + aa.Axis[2] * aa.Axis[2])
-    aa.Angle *= 0.5
-    const s = Math.sin(aa.Angle)
-    const bx = (s * aa.Axis[0]) / axisLength
-    const by = (s * aa.Axis[1]) / axisLength
-    const bz = (s * aa.Axis[2]) / axisLength
-    const bw = Math.cos(aa.Angle)
+    const axisLength = axis.vLength
+    rad *= 0.5
+    const s = Math.sin(rad)
+    const bx = (s * axis[0]) / axisLength
+    const by = (s * axis[1]) / axisLength
+    const bz = (s * axis[2]) / axisLength
+    const bw = Math.cos(rad)
 
     const [ax1, ay1, az1, aw1] = this
     this[0] = ax1 * bw + aw1 * bx + ay1 * bz - az1 * by

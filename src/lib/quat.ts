@@ -1,4 +1,4 @@
-import { AxisAngle, degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
+import { degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
 import { Mat3 } from './mat33'
 import { Vec3 } from './vec3'
 
@@ -8,14 +8,10 @@ export class Quat extends Float32Array {
     this.set([x, y, z, w])
   }
 
-  setAxisAngle(aa: AxisAngle): Quat {
-    const rad = aa.Angle * 0.5
+  static setAxisAngle(axis: Vec3, rad: number): Quat {
+    rad *= 0.5
     const s = Math.sin(rad)
-    this[0] = s * aa.Axis[0]
-    this[1] = s * aa.Axis[1]
-    this[2] = s * aa.Axis[2]
-    this[3] = Math.cos(rad)
-    return this
+    return new Quat(s * axis[0], s * axis[1], s * axis[2], Math.cos(rad))
   }
 
   /**
@@ -28,18 +24,18 @@ export class Quat extends Float32Array {
    *  angle -90 is the same as the quaternion formed by
    *  [0, 0, 1] and 270. This method favors the latter.
    */
-  get axisAngle(): AxisAngle {
+  get axisAngle(): { axis: Vec3; rad: number } {
     const rad = Math.acos(this[3]) * 2.0
     const s = Math.sin(rad / 2.0)
     const aa = {
-      Angle: 0,
-      Axis: new Vec3(),
+      rad: 0,
+      axis: new Vec3(),
     }
     if (s > EPSILON) {
-      aa.Axis.set([this[0] / s, this[1] / s, this[2] / s])
+      aa.axis.set([this[0] / s, this[1] / s, this[2] / s])
     } else {
       // If s is zero, return any axis (no rotation - axis does not matter)
-      aa.Axis.set([1, 0, 0])
+      aa.axis.set([1, 0, 0])
     }
     return aa
   }
@@ -375,10 +371,8 @@ export class Quat extends Float32Array {
         const axis = Vec3.up()
           .cross(a)
           .normalize()
-        this.setAxisAngle({
-          Axis: axis,
-          Angle: Math.PI,
-        })
+
+        this.copy(Quat.setAxisAngle(axis, Math.PI))
         return this
       }
     } else if (dot > 0.999999) {

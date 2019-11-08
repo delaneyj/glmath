@@ -1,4 +1,4 @@
-import { AxisAngle, degree2rad as deg2rad, EPSILON, equalsApproximately, inverseSqrt, sqrt } from './common'
+import { degree2rad as deg2rad, EPSILON, equalsApproximately, inverseSqrt, sqrt } from './common'
 import { Vec3 } from './vec3'
 import { Quat } from './quat'
 import { DualQuaternion } from './quat2'
@@ -290,8 +290,8 @@ export class Mat4 extends Float32Array {
     return this
   }
 
-  rotate(aa: AxisAngle): Mat4 {
-    let [x, y, z] = aa.Axis
+  rotate(axis: Vec3, rad: number): Mat4 {
+    let [x, y, z] = axis
     let len = sqrt(x * x + y * y + z * z)
 
     if (len < EPSILON) {
@@ -302,8 +302,8 @@ export class Mat4 extends Float32Array {
     y *= len
     z *= len
 
-    const c = Math.cos(aa.Angle)
-    const s = Math.sin(aa.Angle)
+    const c = Math.cos(rad)
+    const s = Math.sin(rad)
     const t = 1 - c
     const [a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23] = this
 
@@ -417,21 +417,21 @@ export class Mat4 extends Float32Array {
     return new Mat4(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1)
   }
 
-  static fromRotation(aa: AxisAngle): Mat4 {
-    let len = aa.Axis.vLength
+  static fromRotation(axis: Vec3, rad: number): Mat4 {
+    let len = axis.vLength
 
     if (len < EPSILON) {
       return Mat4.identity()
     }
 
-    let [x, y, z] = aa.Axis
+    let [x, y, z] = axis
     len = 1 / len
     x *= len
     y *= len
     z *= len
 
-    const c = Math.cos(aa.Angle)
-    const s = Math.sin(aa.Angle)
+    const c = Math.cos(rad)
+    const s = Math.sin(rad)
     const t = 1 - c
 
     // Perform rotation-specific matrix multiplication
@@ -479,7 +479,7 @@ export class Mat4 extends Float32Array {
     return new Mat4(c, s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
   }
 
-  static fromRotationTranslation(q: Quat, v: Vec3): Mat4 {
+  static fromTranslationRotation(q: Quat, v: Vec3): Mat4 {
     // Quaternion math
     const [x, y, z, w] = q
     const x2 = x + x
@@ -537,7 +537,7 @@ export class Mat4 extends Float32Array {
       translation[1] = (ay * bw + aw * by + az * bx - ax * bz) * 2
       translation[2] = (az * bw + aw * bz + ax * by - ay * bx) * 2
     }
-    return Mat4.fromRotationTranslation(a.real, translation)
+    return Mat4.fromTranslationRotation(a.real, translation)
   }
 
   get translation(): Vec3 {
@@ -587,7 +587,7 @@ export class Mat4 extends Float32Array {
     return q
   }
 
-  static fromRotationTranslationScale(translation: Vec3, rotation: Quat, scaling: Vec3): Mat4 {
+  static fromTranslationRotationScale(translation: Vec3, rotation: Quat, scaling: Vec3): Mat4 {
     // Quaternion math
     const [qx, qy, qz, qw] = rotation
     const x2 = qx + qx
@@ -719,11 +719,11 @@ export class Mat4 extends Float32Array {
     )
   }
 
-  static perspective(fovy: number, aspect: number, near: number, far: number): Mat4 {
+  static perspective(fovy: number, aspect: number, near: number, far?: number): Mat4 {
     const f = 1.0 / Math.tan(fovy / 2)
     let m10 = -1
     let m14 = -2 * near
-    if (Number.isFinite(far)) {
+    if (far && Number.isFinite(far)) {
       const nf = 1 / (near - far)
       m10 = (far + near) * nf
       m14 = 2 * far * near * nf
@@ -888,10 +888,10 @@ export class Mat4 extends Float32Array {
   toString(): string {
     const [a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, a30, a31, a32, a33] = this
     return `mat4(
-  ${a00},${a01},${a02},${a03},
-  ${a10},${a11},${a12},${a13},
-  ${a20},${a21},${a22},${a23},
-  ${a30},${a31},${a32},${a33},
+  ${a00},${a01},${a02},${a03}
+  ${a10},${a11},${a12},${a13}
+  ${a20},${a21},${a22},${a23}
+  ${a30},${a31},${a32},${a33}
 )`
   }
 

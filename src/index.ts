@@ -1,4 +1,4 @@
-export { AxisAngle, equalsApproximately, inverseSqrt, sqrt, EPSILON } from './lib/common'
+export { equalsApproximately, inverseSqrt, sqrt, EPSILON } from './lib/common'
 export { Mat2 } from './lib/mat22'
 export { Mat3 } from './lib/mat33'
 export { Mat4 } from './lib/mat44'
