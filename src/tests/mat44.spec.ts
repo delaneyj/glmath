@@ -1,7 +1,7 @@
+import { sqrt } from '../lib/common'
 import { Mat4 } from '../lib/mat44'
-import { Vec3 } from '../lib/vec3'
 import { Quat } from '../lib/quat'
-import { equalsApproximately, sqrt } from '../lib/common'
+import { Vec3 } from '../lib/vec3'
 
 describe('mat4', () => {
   const matA = new Mat4()
@@ -543,7 +543,7 @@ describe('mat4', () => {
       f = matA.frobeniusNorm()
     })
     it('should return the Frobenius Norm of the matrix', () => {
-      expect(equalsApproximately(f, sqrt(1 ** 2 + 1 ** 2 + 1 ** 2 + 1 ** 2 + 1 ** 2 + 2 ** 2 + 3 ** 2)))
+      expect(f).toBeCloseTo(sqrt(1 ** 2 + 1 ** 2 + 1 ** 2 + 1 ** 2 + 1 ** 2 + 2 ** 2 + 3 ** 2))
     })
   })
 

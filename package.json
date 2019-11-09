@@ -17,7 +17,7 @@
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:eslint": "eslint \"src/**/*.{js,ts,tsx}\" --quiet --fix",
     "test": "run-s build test:*",
-    "test:lint": "eslint \"src/**/*.ts\" --quiet && prettier \"src/**/*.ts\" --list-different",
+    "test:lint": "eslint \"src/**/*.ts\" --quiet --color && prettier \"src/**/*.ts\" --list-different",
     "test:unit": "nyc --silent jest",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && open-cli coverage/index.html",

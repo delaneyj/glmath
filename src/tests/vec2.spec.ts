@@ -1,8 +1,8 @@
-import { equalsApproximately } from '../lib/common'
 import { Mat2 } from '../lib/mat22'
 import { Mat23 } from '../lib/mat23'
 import { Vec2 } from '../lib/vec2'
 import { Vec3 } from '../lib/vec3'
+import { equalsApproximately } from '../lib/common'
 
 describe('vec2', () => {
   const vecA = new Vec2()
@@ -217,7 +217,7 @@ describe('vec2', () => {
     })
 
     it('should return the distance', () => {
-      expect(equalsApproximately(distance, 2.828427))
+      expect(distance).toBeCloseTo(2.828427)
     })
   })
 
@@ -232,10 +232,10 @@ describe('vec2', () => {
     })
   })
 
-  describe('vLength', () => {
+  describe('length', () => {
     let length: number
     beforeEach(() => {
-      result.copy(vecA).vLength
+      result.copy(vecA).length
     })
 
     it('should return the length', () => {
@@ -244,13 +244,8 @@ describe('vec2', () => {
   })
 
   describe('squaredLength', () => {
-    let length: number
-    beforeEach(() => {
-      length = vecA.sqLength
-    })
-
     it('should return the squared length', () => {
-      expect(length).toEqual(5)
+      expect(vecA.sqLength).toEqual(5)
     })
   })
 
@@ -270,12 +265,8 @@ describe('vec2', () => {
   describe('normalize', () => {
     beforeEach(() => {
       vecA.set([5, 0])
-    })
-
-    beforeEach(() => {
       result.copy(vecA).normalize()
     })
-
     it('should place values into out', () => {
       expect(result.equalsApproximately(new Vec2(1, 0)))
     })
@@ -344,7 +335,7 @@ describe('vec2', () => {
       })
 
       it('should result in a unit length vector', () => {
-        expect(equalsApproximately(result.length, 1.0))
+        expect(result.length).toBeCloseTo(1.0)
       })
     })
 
@@ -354,7 +345,7 @@ describe('vec2', () => {
       })
 
       it('should result in a unit length vector', () => {
-        expect(equalsApproximately(result.length, 5.0))
+        expect(equalsApproximately(result.length, 5))
       })
     })
   })

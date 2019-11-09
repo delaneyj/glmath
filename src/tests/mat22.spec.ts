@@ -1,4 +1,4 @@
-import { equalsApproximately, sqrt } from '../lib/common'
+import { sqrt } from '../lib/common'
 import { Mat2 } from '../lib/mat22'
 import { Vec2 } from '../lib/vec2'
 
@@ -152,7 +152,7 @@ describe('mat2', () => {
   describe('frobeniusNorm', () => {
     it('should return the Frobenius Norm of the matrix', () => {
       const e = sqrt(1 ** 2 + 2 ** 2 + 3 ** 2 + 4 ** 2)
-      expect(equalsApproximately(matA.frobeniusNorm(), e))
+      expect(matA.frobeniusNorm()).toBeCloseTo(e)
     })
   })
 

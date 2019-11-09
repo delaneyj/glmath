@@ -103,7 +103,7 @@ export class Vec2 extends Float32Array {
     return x * x + y * y
   }
 
-  get vLength(): number {
+  get length(): number {
     return sqrt(this.sqLength)
   }
 
@@ -120,7 +120,7 @@ export class Vec2 extends Float32Array {
   }
 
   normalize(): Vec2 {
-    const len = this.vLength
+    const len = this.length
     if (len > 0) {
       this.scale(1 / sqrt(len))
     }
@@ -237,12 +237,12 @@ export class Vec2 extends Float32Array {
   }
 
   angle(b: Vec2): number {
-    let len1 = this.vLength
+    let len1 = this.length
     if (len1 > 0) {
       len1 = 1 / sqrt(len1)
     }
 
-    let len2 = b.vLength
+    let len2 = b.length
     if (len2 > 0) {
       len2 = 1 / sqrt(len2)
     }

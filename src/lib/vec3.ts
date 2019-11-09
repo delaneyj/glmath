@@ -29,7 +29,7 @@ export class Vec3 extends Float32Array {
     return new Vec3(x, y, z)
   }
 
-  get vLength(): number {
+  get length(): number {
     const [x, y, z] = this
     return Math.hypot(x, y, z)
   }

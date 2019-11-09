@@ -1,6 +1,6 @@
+import { sqrt, equalsApproximately } from '../lib/common'
 import { Mat23 } from '../lib/mat23'
 import { Vec2 } from '../lib/vec2'
-import { sqrt, equalsApproximately } from '../lib/common'
 
 describe('mat2d', () => {
   const matA = new Mat23()

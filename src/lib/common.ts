@@ -23,8 +23,10 @@ export function inverseSqrt(n: number): number {
   const x2 = n * 0.5
   floatView[0] = n
   intView[0] = 0x5f3759df - (intView[0] >> 1)
-  const y = floatView[0]
-  return y * (threehalfs - x2 * y * y)
+  let y = floatView[0]
+  y = y * (threehalfs - x2 * y * y)
+  // y = y * (threehalfs - x2 * y * y)
+  return y
 }
 
 // Inverse q3 inverse sqrt

@@ -1,7 +1,7 @@
 import { degree2rad as deg2rad, EPSILON, equalsApproximately, inverseSqrt, sqrt } from './common'
 import { Vec3 } from './vec3'
 import { Quat } from './quat'
-import { DualQuaternion } from './quat2'
+import { DualQuat } from './quat2'
 
 // 4x4 Matrix, column-major, when typed out it looks like row-major. The matrices are being post multiplied.
 export class Mat4 extends Float32Array {
@@ -418,7 +418,7 @@ export class Mat4 extends Float32Array {
   }
 
   static fromRotation(axis: Vec3, rad: number): Mat4 {
-    let len = axis.vLength
+    let len = axis.length
 
     if (len < EPSILON) {
       return Mat4.identity()
@@ -515,7 +515,7 @@ export class Mat4 extends Float32Array {
     )
   }
 
-  static fromQuat2(a: DualQuaternion): Mat4 {
+  static fromQuat2(a: DualQuat): Mat4 {
     const translation = new Vec3()
     const bx = -a[0],
       by = -a[1],

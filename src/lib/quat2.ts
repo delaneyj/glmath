@@ -5,7 +5,7 @@ import { Mat4 } from './mat44'
 
 // Dual Quaternion.  Format: [real, dual]
 // Make sure to have normalized dual quaternions, otherwise the functions may not work as intended.<br>
-export class DualQuaternion extends Float32Array {
+export class DualQuat extends Float32Array {
   constructor(realX = 0, realY = 0, realZ = 0, realW = 1, dualX = 0, dualY = 0, dualZ = 0, dualW = 0) {
     super(8)
     this[0] = realX
@@ -19,8 +19,8 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  clone(): DualQuaternion {
-    return new DualQuaternion(this[0], this[1], this[2], this[3], this[4], this[5], this[6], this[7])
+  clone(): DualQuat {
+    return new DualQuat(this[0], this[1], this[2], this[3], this[4], this[5], this[6], this[7])
   }
 
   static fromRotationTranslationValues(
@@ -31,11 +31,11 @@ export class DualQuaternion extends Float32Array {
     x2: number,
     y2: number,
     z2: number,
-  ): DualQuaternion {
+  ): DualQuat {
     const ax = x2 * 0.5
     const ay = y2 * 0.5
     const az = z2 * 0.5
-    return new DualQuaternion(
+    return new DualQuat(
       x1,
       y1,
       z1,
@@ -47,12 +47,12 @@ export class DualQuaternion extends Float32Array {
     )
   }
 
-  static fromRotationTranslation(q: Quat, t: Vec3): DualQuaternion {
+  static fromTranslationRotation(q: Quat, t: Vec3): DualQuat {
     const ax = t[0] * 0.5
     const ay = t[1] * 0.5
     const az = t[2] * 0.5
     const [bx, by, bz, bw] = q
-    return new DualQuaternion(
+    return new DualQuat(
       bx,
       by,
       bz,
@@ -64,27 +64,21 @@ export class DualQuaternion extends Float32Array {
     )
   }
 
-  static fromTranslation(t: Vec3): DualQuaternion {
-    return new DualQuaternion(0, 0, 0, 1, t[0] * 0.5, t[1] * 0.5, t[2] * 0.5, 0)
+  static fromTranslation(t: Vec3): DualQuat {
+    return new DualQuat(0, 0, 0, 1, t[0] * 0.5, t[1] * 0.5, t[2] * 0.5, 0)
   }
 
-  static fromRotation(q: Quat): DualQuaternion {
-    return new DualQuaternion(q[0], q[1], q[2], q[3], 0, 0, 0, 0)
+  static fromRotation(q: Quat): DualQuat {
+    return new DualQuat(q[0], q[1], q[2], q[3], 0, 0, 0, 0)
   }
 
-  static fromMat4(a: Mat4): DualQuaternion {
-    //TODO Optimize this
-    // const outer = a.getRotation()
-
-    // mat4.getRotation(outer, a)
-    // const t = new glMatrix.ARRAY_TYPE(3)
-    // mat4.getTranslation(t, a)
-    // fromRotationTranslation(out, outer, t)
-    console.log(a)
-    return new DualQuaternion()
+  static fromMat4(a: Mat4): DualQuat {
+    const outer = a.rotation
+    const t = a.translation
+    return DualQuat.fromTranslationRotation(outer, t)
   }
 
-  copy(dq: DualQuaternion): DualQuaternion {
+  copy(dq: DualQuat): DualQuat {
     this[0] = dq[0]
     this[1] = dq[1]
     this[2] = dq[2]
@@ -96,7 +90,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  setIdentity(): DualQuaternion {
+  setIdentity(): DualQuat {
     this[0] = 0
     this[1] = 0
     this[2] = 0
@@ -146,7 +140,7 @@ export class DualQuaternion extends Float32Array {
     )
   }
 
-  translate(v: Vec3): DualQuaternion {
+  translate(v: Vec3): DualQuat {
     const [ax1, ay1, az1, aw1, ax2, ay2, az2, aw2] = this
     const bx1 = v[0] * 0.5
     const by1 = v[1] * 0.5
@@ -158,7 +152,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  rotateX(rad: number): DualQuaternion {
+  rotateX(rad: number): DualQuat {
     let bx = -this[0]
     let by = -this[1]
     let bz = -this[2]
@@ -183,7 +177,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  rotateY(rad: number): DualQuaternion {
+  rotateY(rad: number): DualQuat {
     let bx = -this[0]
     let by = -this[1]
     let bz = -this[2]
@@ -208,7 +202,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  rotateZ(rad: number): DualQuaternion {
+  rotateZ(rad: number): DualQuat {
     let bx = -this[0]
     let by = -this[1]
     let bz = -this[2]
@@ -234,7 +228,7 @@ export class DualQuaternion extends Float32Array {
   }
 
   // Rotates a dual quat by a given quaternion (a * q)
-  rotateByQuatAppend(q: Quat): DualQuaternion {
+  rotateByQuatAppend(q: Quat): DualQuat {
     const [qx, qy, qz, qw] = q
     let [ax, ay, az, aw] = this
 
@@ -254,7 +248,7 @@ export class DualQuaternion extends Float32Array {
   }
 
   // Rotates a dual quat by a given quaternion (q * a)
-  rotateByQuatPrepend(q: Quat): DualQuaternion {
+  rotateByQuatPrepend(q: Quat): DualQuat {
     const [qx, qy, qz, qw] = q
     let [bx, by, bz, bw] = this
 
@@ -273,12 +267,12 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  rotateAroundAxis(axis: Vec3, rad: number): DualQuaternion {
+  rotateAroundAxis(axis: Vec3, rad: number): DualQuat {
     //Special case for rad = 0
     if (Math.abs(rad) < EPSILON) {
       return this
     }
-    const axisLength = axis.vLength
+    const axisLength = axis.length
     rad *= 0.5
     const s = Math.sin(rad)
     const bx = (s * axis[0]) / axisLength
@@ -303,7 +297,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  add(b: DualQuaternion): DualQuaternion {
+  add(b: DualQuat): DualQuat {
     this[0] += b[0]
     this[1] += b[1]
     this[2] += b[2]
@@ -315,7 +309,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  multiply(b: DualQuaternion): DualQuaternion {
+  multiply(b: DualQuat): DualQuat {
     const ax0 = this[0]
     const ay0 = this[1]
     const az0 = this[2]
@@ -343,7 +337,7 @@ export class DualQuaternion extends Float32Array {
     return this
   }
 
-  scale(b: number): DualQuaternion {
+  scale(b: number): DualQuat {
     this[0] *= b
     this[1] *= b
     this[2] *= b
@@ -356,7 +350,7 @@ export class DualQuaternion extends Float32Array {
   }
 
   // Calculates the dot product of two dual quat's (The dot product of the real parts)
-  dot(b: DualQuaternion): number {
+  dot(b: DualQuat): number {
     const [a0, a1, a2, a3] = this
     const [b0, b1, b2, b3] = b
     return a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3
@@ -364,7 +358,7 @@ export class DualQuaternion extends Float32Array {
 
   // Performs a linear interpolation between two dual quats's
   // NOTE: The resulting dual quaternions won't always be normalized (The error is most noticeable when t = 0.5)
-  lerp(a: DualQuaternion, b: DualQuaternion, t: number): DualQuaternion {
+  lerp(a: DualQuat, b: DualQuat, t: number): DualQuat {
     const mt = 1 - t
     if (a.dot(b) < 0) {
       t = -t
@@ -383,7 +377,7 @@ export class DualQuaternion extends Float32Array {
   }
 
   // Calculates the inverse of a dual quat. If they are normalized, conjugate is cheaper
-  invert(): DualQuaternion {
+  invert(): DualQuat {
     const sqlen = this.squaredLength
     this[0] = -this[0] / sqlen
     this[1] = -this[1] / sqlen
@@ -397,7 +391,7 @@ export class DualQuaternion extends Float32Array {
   }
 
   // Calculates the conjugate of a dual quat. If the dual quaternion is normalized, this function is faster than quat2.inverse and produces the same result.
-  conjugate(): DualQuaternion {
+  conjugate(): DualQuat {
     this[0] = -this[0]
     this[1] = -this[1]
     this[2] = -this[2]
@@ -419,7 +413,7 @@ export class DualQuaternion extends Float32Array {
     return x * x + y * y + z * z + w * w
   }
 
-  normalize(): DualQuaternion {
+  normalize(): DualQuat {
     let magnitude = this.squaredLength
     if (magnitude > 0) {
       magnitude = Math.sqrt(magnitude)
@@ -440,13 +434,13 @@ export class DualQuaternion extends Float32Array {
     return `quat2(${rx}, ${ry}, ${rz}, ${rw}, ${dx}, ${dy}, ${dz}, ${dw})`
   }
 
-  equalsExact(b: DualQuaternion): boolean {
+  equalsExact(b: DualQuat): boolean {
     const [a0, a1, a2, a3, a4, a5, a6, a7] = this
     const [b0, b1, b2, b3, b4, b5, b6, b7] = b
     return a0 === b0 && a1 === b1 && a2 === b2 && a3 === b3 && a4 === b4 && a5 === b5 && a6 === b6 && a7 === b7
   }
 
-  equalsApproximately(b: DualQuaternion): boolean {
+  equalsApproximately(b: DualQuat): boolean {
     const [a0, a1, a2, a3, a4, a5, a6, a7] = this
     const [b0, b1, b2, b3, b4, b5, b6, b7] = b
     return (

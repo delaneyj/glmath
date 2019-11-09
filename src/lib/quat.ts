@@ -2,6 +2,11 @@ import { degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
 import { Mat3 } from './mat33'
 import { Vec3 } from './vec3'
 
+export interface AxisAngle {
+  axis: Vec3
+  rad: number
+}
+
 export class Quat extends Float32Array {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     super(4)
@@ -24,20 +29,17 @@ export class Quat extends Float32Array {
    *  angle -90 is the same as the quaternion formed by
    *  [0, 0, 1] and 270. This method favors the latter.
    */
-  get axisAngle(): { axis: Vec3; rad: number } {
+  get axisAngle(): AxisAngle {
     const rad = Math.acos(this[3]) * 2.0
     const s = Math.sin(rad / 2.0)
-    const aa = {
-      rad: 0,
-      axis: new Vec3(),
-    }
+    let axis: Vec3
     if (s > EPSILON) {
-      aa.axis.set([this[0] / s, this[1] / s, this[2] / s])
+      axis = new Vec3(this[0] / s, this[1] / s, this[2] / s)
     } else {
       // If s is zero, return any axis (no rotation - axis does not matter)
-      aa.axis.set([1, 0, 0])
+      axis = new Vec3(1, 0, 0)
     }
-    return aa
+    return { rad, axis }
   }
 
   // Angular distance between two unit quaternions
@@ -254,7 +256,7 @@ export class Quat extends Float32Array {
   }
 
   // Creates a quaternion from the given euler angle x, y, z.in degrees
-  fromEulerDegrees(x: number, y: number, z: number): Quat {
+  static fromEulerDegrees(x: number, y: number, z: number): Quat {
     const halfToRad = 0.5 * degree2rad
     x *= halfToRad
     y *= halfToRad
@@ -267,11 +269,12 @@ export class Quat extends Float32Array {
     const sz = Math.sin(z)
     const cz = Math.cos(z)
 
-    this[0] = sx * cy * cz - cx * sy * sz
-    this[1] = cx * sy * cz + sx * cy * sz
-    this[2] = cx * cy * sz - sx * sy * cz
-    this[3] = cx * cy * cz + sx * sy * sz
-    return this
+    return new Quat(
+      sx * cy * cz - cx * sy * sz,
+      cx * sy * cz + sx * cy * sz,
+      cx * cy * sz - sx * sy * cz,
+      cx * cy * cz + sx * sy * sz,
+    )
   }
 
   toString(): string {
@@ -367,7 +370,7 @@ export class Quat extends Float32Array {
     const dot = a.dot(b)
     if (dot < -0.999999) {
       const tmpvec3 = Vec3.right().cross(a)
-      if (tmpvec3.vLength < EPSILON) {
+      if (tmpvec3.length < EPSILON) {
         const axis = Vec3.up()
           .cross(a)
           .normalize()
