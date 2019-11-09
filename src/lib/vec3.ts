@@ -331,7 +331,7 @@ export class Vec3 extends Float32Array {
     return `vec3(${x}, ${y}, ${z})`
   }
 
-  equalExact(b: Vec3): boolean {
+  equalsExact(b: Vec3): boolean {
     const [ax, ay, az] = this
     const [bx, by, bz] = b
     return ax === bx && ay === by && az === bz
