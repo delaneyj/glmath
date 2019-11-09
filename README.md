@@ -1,5 +1,8 @@
 # glmath
 
+## Docs
+https://delaneyj.github.io/glmath/
+
 Pure Typescript port of [glMatrix](https://github.com/toji/gl-matrix) for modern browsers
 
 ## Why?
