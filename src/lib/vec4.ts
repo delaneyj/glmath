@@ -1,4 +1,4 @@
-import { equalsApproximately, sqrt } from './common'
+import { equalsApproximately, sqrt, inverseSqrt } from './common'
 import { Quat } from './quat'
 import { Mat4 } from './mat44'
 import { Vec3 } from './vec3'
@@ -149,11 +149,7 @@ export class Vec4 extends Float32Array {
 
   normalize(): Vec4 {
     const [x, y, z, w] = this
-    let len = this.squaredLength
-
-    if (len > 0) {
-      len = 1 / sqrt(len)
-    }
+    const len = inverseSqrt(this.squaredLength)
     this[0] = x * len
     this[1] = y * len
     this[2] = z * len

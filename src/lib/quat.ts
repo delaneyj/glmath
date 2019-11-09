@@ -1,4 +1,4 @@
-import { degree2rad, EPSILON, equalsApproximately, sqrt } from './common'
+import { degree2rad, EPSILON, equalsApproximately, sqrt, inverseSqrt } from './common'
 import { Mat3 } from './mat33'
 import { Vec3 } from './vec3'
 
@@ -335,11 +335,7 @@ export class Quat extends Float32Array {
 
   normalize(): Quat {
     const [x, y, z, w] = this
-    let len = this.squaredLength
-
-    if (len > 0) {
-      len = 1 / sqrt(len)
-    }
+    const len = inverseSqrt(this.squaredLength)
     this[0] = x * len
     this[1] = y * len
     this[2] = z * len

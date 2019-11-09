@@ -1,4 +1,4 @@
-import { equalsApproximately, sqrt } from './common'
+import { equalsApproximately, sqrt, inverseSqrt } from './common'
 import { Mat2 } from './mat22'
 import { Mat23 } from './mat23'
 import { Mat3 } from './mat33'
@@ -237,16 +237,8 @@ export class Vec2 extends Float32Array {
   }
 
   angle(b: Vec2): number {
-    let len1 = this.length
-    if (len1 > 0) {
-      len1 = 1 / sqrt(len1)
-    }
-
-    let len2 = b.length
-    if (len2 > 0) {
-      len2 = 1 / sqrt(len2)
-    }
-
+    const len1 = inverseSqrt(this.length)
+    const len2 = inverseSqrt(b.length)
     const cos = this.squaredDistance(b) * len1 * len2
     if (cos > 1) {
       return 0
